@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chain-mail-deployment
+  labels:
+    app: chain-mail
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chain-mail
+  template:
+    metadata:
+      labels:
+        app: chain-mail
+    spec:
+      containers:
+      - name: chain-mail
+        image: reusin/chain-mail:1.0
+        env:
+        - name: RABBITMQ_HOST
+          value: rabbitmq-server-service
+        - name: RABBITMQ_PORT
+          value: "5672"
+        - name: SMTP_HOST
+          value: maildev-service
+        - name: SMTP_PORT
+          value: "25"
+        ports:
+        - containerPort: 5000
+
