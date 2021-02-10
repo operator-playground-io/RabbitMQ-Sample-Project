@@ -50,8 +50,17 @@ def channel_send():
 
 #Creates a channel and a callback to consume the messages. The consumption loop starts inside as well.
 def channel_consume():
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host, port))
-    channel = connection.channel()
+    while True:
+        try:
+            connection = pika.BlockingConnection(pika.ConnectionParameters(host, port))
+            channel = connection.channel()
+        except Exception as e:
+            print("Connection error. Retrying connection", e)
+            continue
+        else:
+            break
+    #connection = pika.BlockingConnection(pika.ConnectionParameters(host, port))
+    #channel = connection.channel()
     
     #Creating queue
     channel.queue_declare(queue=queue)
