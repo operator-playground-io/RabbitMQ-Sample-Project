@@ -34,7 +34,7 @@ def channel_send():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host, port))
     channel = connection.channel()
     #Creating queue
-    #channel.queue_declare(queue=queue)
+    channel.queue_declare(queue=queue)
     #channel.exchange_declare(exchange='mail', exchange_type='direct')
     
     def push(message):
