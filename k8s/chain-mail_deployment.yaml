@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: chain-mail
-        image: reusin/chain-mail:1.0
+        image: chain-mail
         env:
         - name: RABBITMQ_HOST
           value: rabbitmq-server-service
