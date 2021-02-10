@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chain-mail-service
+spec:
+  type: NodePort
+  selector:
+    app: chain-mail
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 30007

@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <!--Bootstrap cdns-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <title>A Queued mailing system</title>
+        
+    </head>
+    <body>
+        <div class="jumbotron">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 mx-auto text-center">
+                        <h1>A Queued Mailing System</h1>
+                        <p>A mailing system which queues the messages in RabbitMQ before mailing it.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mx-auto text-center" >
+                        <form class="form-group" onsubmit="return false" id="form">
+                            <div class="row">
+                                <div class="col p-1">
+                                    <input type="text" name="email" id="email" class="form-control" placeholder="Email Address">
+                                </div>
+                                <div class="col p-1">
+                                    <input type="text" name="subject" id="subject" class="form-control" placeholder="Subject">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col p-1">
+                                    <textarea rows="10" placeholder="Enter Content" class="form-control" name="content" id="content"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col  p-1">
+                                    <button class="btn btn-danger form-control" onclick="marshall(this)">Spam!</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        //Marshall and start
+        var marshall = function (e) {
+            
+            //Creating a Request
+            const XHR = new XMLHttpRequest();
+            let FD = new FormData();
+            
+            var email = document.getElementById("email")
+            var subject = document.getElementById("subject")
+            var content = document.getElementById("content")
+            
+            FD.append('email',email.value);
+            FD.append('subject',subject.value);
+            FD.append('content',content.value);
+            
+            XHR.addEventListener( "load", function(event) {
+                alert("You have unleashed destruction! But RabbitMQ will save you victim's Mail Service");
+                document.getElementById("form").reset();
+            });
+            XHR.addEventListener( "error", function( event ) {
+              console.log( 'Oops! Something went wrong.' );
+            } );
+            XHR.open( "POST", "/marshall" );
+            XHR.send(FD);
+        }
+    </script>
+</html>

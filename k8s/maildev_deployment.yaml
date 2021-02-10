@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: maildev-deployment
+  labels:
+    app: maildev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: maildev
+  template:
+    metadata:
+      labels:
+        app: maildev
+    spec:
+      containers:
+      - name: maildev
+        image: maildev/maildev:1.1.0
+        ports:
+        - containerPort: 80
+          name: web-port
+        - containerPort: 25
+          name: mail-port
+
